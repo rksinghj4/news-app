@@ -1,6 +1,8 @@
 package com.raj.newsapp.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 
 /**
  * ViewModel is a class which act as bridge between UI and Model layers.
