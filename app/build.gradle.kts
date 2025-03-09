@@ -50,10 +50,11 @@ dependencies {
     implementation(libs.okhttp3.logging.interceptor)
 
     implementation(libs.dagger.hilt)
-    implementation(libs.dagger.hilt.android.compiler)
+    ksp(libs.dagger.hilt.android.compiler)
 
     implementation(libs.androidx.navigation)    //Navigation compose
-    implementation(libs.kotlinx.serialization.json)//In Navigation compose used for data class serialization/deserialization
+    //In Navigation - compose used for data class serialization/deserialization
+    implementation(libs.kotlinx.serialization.json)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
