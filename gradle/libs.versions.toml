@@ -12,6 +12,9 @@ retrofit = "2.9.0"
 okhttp3LoggingInterceptor = "4.9.0"
 hiltVersion = "2.51.1"
 ksp = "1.9.0-1.0.13"
+navVersion = "2.8.8"
+kotlinSerialization = "1.8.0"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -34,6 +37,9 @@ okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-
 
 dagger-hilt = {group = "com.google.dagger", name = "hilt-android", version.ref = "hiltVersion"}
 dagger-hilt-android-compiler = {group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hiltVersion"}
+
+androidx-navigation = { module = "androidx.navigation:navigation-compose", version.ref = "navVersion" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinSerialization" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
