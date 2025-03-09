@@ -2,7 +2,10 @@ package com.raj.newsapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.raj.newsapp.model.repository.NewsRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 /**
  * ViewModel is a class which act as bridge between UI and Model layers.
@@ -22,6 +25,19 @@ import kotlinx.coroutines.launch
  * SavedInstanceState can be used from small and simple data
  * whereas viewmodel can be used for complex and comparatively large data.
  */
-class NewsViewModel: ViewModel() {
+@HiltViewModel
+class NewsViewModel @Inject constructor(
+    private val newsRepository: NewsRepository,
 
+    ): ViewModel() {
+
+    init {
+
+    }
+
+    fun fetchTopHeadlines(country: String) {
+        viewModelScope.launch {
+
+        }
+    }
 }
