@@ -1,5 +1,7 @@
 package com.raj.newsapp.di
 
+import com.raj.newsapp.common.DefaultDispatcherProvider
+import com.raj.newsapp.common.DispatcherProvider
 import com.raj.newsapp.model.webservice.WebService
 import dagger.Module
 import dagger.Provides
@@ -14,23 +16,27 @@ import javax.inject.Singleton
 class NetworkModule {//Note: It's class
 
     @Provides
-    @Singleton
     @BaseUrl
     fun provideBaseUrl() = "https://newsapi.org/v2/"
 
     @Singleton
     @Provides
-    fun provideGsonConvertorFactory() = GsonConverterFactory.create()
+    fun provideGsonConvertorFactory(): GsonConverterFactory = GsonConverterFactory.create()
 
     @Singleton
     @Provides
     fun provideRetrofit(
         @BaseUrl baseUrl: String,
         gsonConverterFactory: GsonConverterFactory
-    ) = Retrofit.Builder()
+    ): WebService = Retrofit.Builder()
         .baseUrl(baseUrl)//1
         .addConverterFactory(gsonConverterFactory)//2
         .build()//3
         .create(WebService::class.java)//4 create implementation of our WebService interface
 
+    @Singleton
+    @Provides
+    fun dispatcherProvider(): DispatcherProvider = DefaultDispatcherProvider()
 }
+
+

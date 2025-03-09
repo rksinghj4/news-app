@@ -2,8 +2,16 @@ package com.raj.newsapp.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.raj.newsapp.common.Constants.COUNTRY
+import com.raj.newsapp.common.DispatcherProvider
+import com.raj.newsapp.model.data.TopHeadlinesResponse
 import com.raj.newsapp.model.repository.NewsRepository
+import com.raj.newsapp.ui.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,16 +36,33 @@ import javax.inject.Inject
 @HiltViewModel
 class NewsViewModel @Inject constructor(
     private val newsRepository: NewsRepository,
-
-    ): ViewModel() {
+    private val dispatcherProvider: DispatcherProvider
+) : ViewModel() {
+    private val _uiStateFlow =
+        MutableStateFlow<UiState<List<TopHeadlinesResponse.Article>>>(UiState.Loading)
+    internal val uiStateFlow = _uiStateFlow.asStateFlow()
 
     init {
-
+        fetchTopHeadlines()
     }
-
-    fun fetchTopHeadlines(country: String) {
-        viewModelScope.launch {
-
+    
+    private fun fetchTopHeadlines() {
+        viewModelScope.launch(dispatcherProvider.main) {
+            newsRepository.fetchTopHeadlines(COUNTRY)
+                .flowOn(dispatcherProvider.io)
+                .catch { e ->
+                    _uiStateFlow.value = UiState.Error(e.toString())
+                }.collect { topHeadlinesResponse ->
+                    when (topHeadlinesResponse.status) {
+                        "ok" -> {
+                            _uiStateFlow.value =
+                                UiState.Success(data = topHeadlinesResponse.articles)
+                        }
+                        else -> {
+                            _uiStateFlow.value = UiState.Error(message = "Something went wrong")
+                        }
+                    }
+                }
         }
     }
 }
