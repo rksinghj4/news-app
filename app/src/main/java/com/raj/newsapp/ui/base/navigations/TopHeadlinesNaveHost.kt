@@ -13,7 +13,6 @@ import com.raj.newsapp.view.TopHeadlinesNode
 import kotlinx.serialization.Serializable
 
 
-@Serializable
 sealed class Route {
     @Serializable
     data object TopHeadlines : Route()
