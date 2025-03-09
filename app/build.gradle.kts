@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.google.devtools.ksp)
+    alias(libs.plugins.kotlin.serialization)
 }
 
 android {
@@ -50,7 +51,13 @@ dependencies {
     implementation(libs.okhttp3.logging.interceptor)
 
     implementation(libs.dagger.hilt)
+    //To import androidx.hilt.navigation.compose.hiltViewModel
+    implementation(libs.androidx.hilt.navigation.compose)
     ksp(libs.dagger.hilt.android.compiler)
+    //To import coil.compose.AsyncImage, coil3 has multiplatform support
+    implementation(libs.coil.compose)
+    //To import androidx.browser.customtabs.CustomTabsIntent
+    implementation(libs.androidx.browser)
 
     implementation(libs.androidx.navigation)    //Navigation compose
     //In Navigation - compose used for data class serialization/deserialization

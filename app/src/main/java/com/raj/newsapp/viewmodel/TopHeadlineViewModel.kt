@@ -34,7 +34,7 @@ import javax.inject.Inject
  * whereas viewmodel can be used for complex and comparatively large data.
  */
 @HiltViewModel
-class NewsViewModel @Inject constructor(
+class TopHeadlineViewModel @Inject constructor(
     private val newsRepository: NewsRepository,
     private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
@@ -45,7 +45,7 @@ class NewsViewModel @Inject constructor(
     init {
         fetchTopHeadlines()
     }
-    
+
     private fun fetchTopHeadlines() {
         viewModelScope.launch(dispatcherProvider.main) {
             newsRepository.fetchTopHeadlines(COUNTRY)
