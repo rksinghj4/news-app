@@ -14,7 +14,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -22,7 +22,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.raj.newsapp.ui.base.navigations.TopHeadlinesNaveHost
+import com.raj.newsapp.ui.base.navigations.SourceNavHost
+import com.raj.newsapp.ui.base.navigations.TopHeadlinesNavHost
 import com.raj.newsapp.ui.theme.NewsAppComposeTheme
 import com.raj.newsapp.view.ClickActionMain
 import com.raj.newsapp.view.MainScreen
@@ -36,11 +37,13 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             val viewModel: MainViewModel = hiltViewModel()
-            val showTopHeadlineState by viewModel.showTopHeadlines.collectAsStateWithLifecycle()
             val showMainScreenState by viewModel.showMainScreen.collectAsStateWithLifecycle()
 
+            val showTopHeadlineState by viewModel.showTopHeadlines.collectAsStateWithLifecycle()
+            val showNewsSourcesSate by viewModel.showNewsSource.collectAsStateWithLifecycle()
+
             val context = LocalContext.current
-            var backPressedTime by remember { mutableStateOf(0L) }
+            var backPressedTime by remember { mutableLongStateOf(0L) }
 
             NewsAppComposeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
@@ -50,7 +53,11 @@ class MainActivity : ComponentActivity() {
                             if (currentTime - backPressedTime < 2000) {
                                 (context as? Activity)?.finish()
                             } else {
-                                Toast.makeText(context, "Press back again to exit", Toast.LENGTH_SHORT).show()
+                                Toast.makeText(
+                                    context,
+                                    "Press back again to exit",
+                                    Toast.LENGTH_SHORT
+                                ).show()
                                 backPressedTime = currentTime
                             }
                             viewModel.showMainScreen()
@@ -59,7 +66,10 @@ class MainActivity : ComponentActivity() {
                             MainScreen(clickAction(viewModel))
                         }
                         if (showTopHeadlineState) {
-                            TopHeadlinesNaveHost()
+                            TopHeadlinesNavHost()
+                        }
+                        if (showNewsSourcesSate) {
+                            SourceNavHost()
                         }
                     }
                 }

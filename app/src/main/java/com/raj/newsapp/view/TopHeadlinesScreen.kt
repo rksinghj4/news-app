@@ -11,7 +11,7 @@ import com.raj.newsapp.ui.base.ErrorScreen
 import com.raj.newsapp.ui.base.Loading
 import com.raj.newsapp.ui.base.TopBarScaffold
 import com.raj.newsapp.ui.base.UiState
-import com.raj.newsapp.ui.base.navigations.ArticleList
+import com.raj.newsapp.ui.base.ArticleList
 import com.raj.newsapp.viewmodel.TopHeadlineViewModel
 
 @Composable

@@ -1,7 +1,5 @@
 package com.raj.newsapp.ui.base.navigations
 
-import android.content.Context
-import androidx.browser.customtabs.CustomTabsIntent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
@@ -19,7 +17,7 @@ sealed class Route {
 }
 
 @Composable
-fun TopHeadlinesNaveHost() {
+fun TopHeadlinesNavHost() {
     val navController: NavHostController = rememberNavController()
     val context = LocalContext.current
 

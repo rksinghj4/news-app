@@ -1,4 +1,4 @@
-package com.raj.newsapp.ui.base.navigations
+package com.raj.newsapp.ui.base
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
