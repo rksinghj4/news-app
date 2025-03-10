@@ -20,4 +20,8 @@ interface WebService {
     @Headers("X-Api-Key: $API_KEY")
     @GET("top-headlines")
     suspend fun fetchTopHeadlinesBySource(@Query("sources") source: String): TopHeadlinesResponse
+
+    @Headers("X-Api-Key: $API_KEY", "User-Agent: news-android-app")
+    @GET("top-headlines")
+    suspend fun fetchTopHeadlinesByCountry(@Query("country") country: String): TopHeadlinesResponse
 }

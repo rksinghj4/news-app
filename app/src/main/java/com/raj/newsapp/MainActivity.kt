@@ -22,7 +22,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.raj.newsapp.ui.base.navigations.SourceNavHost
+import com.raj.newsapp.ui.base.navigations.CountriesNavHost
+import com.raj.newsapp.ui.base.navigations.SourcesNavHost
 import com.raj.newsapp.ui.base.navigations.TopHeadlinesNavHost
 import com.raj.newsapp.ui.theme.NewsAppComposeTheme
 import com.raj.newsapp.view.ClickActionMain
@@ -40,8 +41,8 @@ class MainActivity : ComponentActivity() {
             val showMainScreenState by viewModel.showMainScreen.collectAsStateWithLifecycle()
 
             val showTopHeadlineState by viewModel.showTopHeadlines.collectAsStateWithLifecycle()
-            val showNewsSourcesSate by viewModel.showNewsSource.collectAsStateWithLifecycle()
-
+            val showNewsSourcesState by viewModel.showNewsSource.collectAsStateWithLifecycle()
+            val showCountriesState by viewModel.showCountries.collectAsStateWithLifecycle()
             val context = LocalContext.current
             var backPressedTime by remember { mutableLongStateOf(0L) }
 
@@ -68,8 +69,11 @@ class MainActivity : ComponentActivity() {
                         if (showTopHeadlineState) {
                             TopHeadlinesNavHost()
                         }
-                        if (showNewsSourcesSate) {
-                            SourceNavHost()
+                        if (showNewsSourcesState) {
+                            SourcesNavHost()
+                        }
+                        if (showCountriesState) {
+                            CountriesNavHost()
                         }
                     }
                 }

@@ -11,4 +11,5 @@ interface NewsRepository {
 
     fun fetchTopHeadlinesBySource(source: String): Flow<TopHeadlinesResponse>
 
+    fun fetchTopHeadlinesByCountry(countryCode: String): Flow<TopHeadlinesResponse>
 }

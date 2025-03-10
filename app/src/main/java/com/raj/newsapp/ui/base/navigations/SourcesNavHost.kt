@@ -20,8 +20,9 @@ sealed interface SourceRoute {
     data class SourceDetails(val source: String)
 }
 
+
 @Composable
-fun SourceNavHost() {
+fun SourcesNavHost() {
     val navHostController: NavHostController = rememberNavController()
     val context = LocalContext.current
     NavHost(

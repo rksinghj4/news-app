@@ -2,7 +2,9 @@
     <string name="app_name">NewsAppCompose</string>
     <string name="loading">Loading</string>
     <string name="top_headlines">Top headlines</string>
-    <string name="top_headlines_sources">Headlines Sources</string>
+    <string name="top_headlines_sources">Select Sources for Headlines</string>
     <string name="top_headlines_by_source">Top headlines by source</string>
+    <string name="top_headlines_countries">Select Countries for Headlines</string>
+    <string name="top_headlines_by_country">Top headlines by country</string>
 
 </resources>

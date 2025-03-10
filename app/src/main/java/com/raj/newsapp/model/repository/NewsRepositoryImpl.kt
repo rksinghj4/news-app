@@ -26,5 +26,13 @@ class NewsRepositoryImpl @Inject constructor(private val webService: WebService)
         return flow {
             emit(webService.fetchTopHeadlinesBySource(source))
         }
+
+
+    }
+
+    override fun fetchTopHeadlinesByCountry(countryCode: String): Flow<TopHeadlinesResponse> {
+        return flow {
+            emit(webService.fetchTopHeadlinesByCountry(countryCode))
+        }
     }
 }
