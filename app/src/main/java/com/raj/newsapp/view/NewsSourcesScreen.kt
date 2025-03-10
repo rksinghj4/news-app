@@ -21,7 +21,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.raj.newsapp.R
-import com.raj.newsapp.model.data.TopHeadlinesSourceResponse
+import com.raj.newsapp.model.data.TopHeadlinesSourcesResponse
 import com.raj.newsapp.ui.base.ErrorScreen
 import com.raj.newsapp.ui.base.Loading
 import com.raj.newsapp.ui.base.TopBarScaffold
@@ -29,21 +29,37 @@ import com.raj.newsapp.ui.base.UiState
 import com.raj.newsapp.viewmodel.TopHeadlinesSourcesViewModel
 
 @Composable
-fun NewsSourceNode(
-    onItemClick: () -> Unit = {},
+fun NewsSourcesNode(
+    onItemClick: (source: String) -> Unit = {},
     viewModel: TopHeadlinesSourcesViewModel = hiltViewModel()
 ) {
-    val sourceState by viewModel.sourceStateFlow.collectAsStateWithLifecycle()
+    val sourceState by viewModel.sourcesStateFlow.collectAsStateWithLifecycle()
 
     TopBarScaffold(title = stringResource(R.string.top_headlines_sources)) {
-        NewsSourceScreen(sourceState, onItemClick)
+        NewsSourcesScreen(sourceState, onItemClick = onItemClick)
     }
 }
 
 @Composable
-fun NewsSourceScreen(
-    uiState: UiState<List<TopHeadlinesSourceResponse.Source>>,
-    onItemClick: () -> Unit
+fun NewsBySourceNode(
+    selectedSource: String,
+    onItemClick: (url: String) -> Unit,
+    viewModel: TopHeadlinesSourcesViewModel = hiltViewModel()
+) {
+    viewModel.fetchTopHeadlinesBySource(source = selectedSource)
+    val topHeadlinesBySourceState by viewModel.topHeadlinesBySourceFlow.collectAsStateWithLifecycle()
+    TopBarScaffold(title = stringResource(R.string.top_headlines_by_source)) {
+        TopHeadlinesScreen(topHeadlinesBySourceState) { url ->
+            onItemClick(url)
+        }
+    }
+}
+
+
+@Composable
+fun NewsSourcesScreen(
+    uiState: UiState<List<TopHeadlinesSourcesResponse.Source>>,
+    onItemClick: (source: String) -> Unit
 ) {
     when (uiState) {
         UiState.Loading -> {
@@ -61,7 +77,10 @@ fun NewsSourceScreen(
 }
 
 @Composable
-fun SourcesList(sources: List<TopHeadlinesSourceResponse.Source>, onItemClick: () -> Unit) {
+fun SourcesList(
+    sources: List<TopHeadlinesSourcesResponse.Source>,
+    onItemClick: (source: String) -> Unit
+) {
     LazyColumn(
         modifier = Modifier
             .padding(24.dp)
@@ -76,12 +95,14 @@ fun SourcesList(sources: List<TopHeadlinesSourceResponse.Source>, onItemClick: (
 }
 
 @Composable
-fun Source(source: TopHeadlinesSourceResponse.Source, onItemClick: () -> Unit) {
+fun Source(source: TopHeadlinesSourcesResponse.Source, onItemClick: (source: String) -> Unit) {
     Card(
         modifier = Modifier
             .width(300.dp)
             .height(60.dp),
-        onClick = onItemClick
+        onClick = {
+            onItemClick(source.name)
+        }
     ) {
         Column(
             modifier = Modifier

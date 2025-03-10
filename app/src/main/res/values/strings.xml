@@ -3,4 +3,6 @@
     <string name="loading">Loading</string>
     <string name="top_headlines">Top headlines</string>
     <string name="top_headlines_sources">Headlines Sources</string>
+    <string name="top_headlines_by_source">Top headlines by source</string>
+
 </resources>

@@ -1,7 +1,7 @@
 package com.raj.newsapp.model.repository
 
 import com.raj.newsapp.model.data.TopHeadlinesResponse
-import com.raj.newsapp.model.data.TopHeadlinesSourceResponse
+import com.raj.newsapp.model.data.TopHeadlinesSourcesResponse
 import com.raj.newsapp.model.webservice.WebService
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -16,9 +16,15 @@ class NewsRepositoryImpl @Inject constructor(private val webService: WebService)
         }
     }
 
-    override fun fetchNewsSources(): Flow<TopHeadlinesSourceResponse> {
+    override fun fetchNewsSources(): Flow<TopHeadlinesSourcesResponse> {
         return flow {
             emit(webService.fetchTopHeadlinesSources())
+        }
+    }
+
+    override fun fetchTopHeadlinesBySource(source: String): Flow<TopHeadlinesResponse> {
+        return flow {
+            emit(webService.fetchTopHeadlinesBySource(source))
         }
     }
 }

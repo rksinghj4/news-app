@@ -3,7 +3,7 @@ package com.raj.newsapp.model.data
 
 import com.google.gson.annotations.SerializedName
 
-data class TopHeadlinesSourceResponse(
+data class TopHeadlinesSourcesResponse(
     @SerializedName("sources")
     val sources: List<Source>,
     @SerializedName("status")

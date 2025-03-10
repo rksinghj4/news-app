@@ -3,7 +3,8 @@ package com.raj.newsapp.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.raj.newsapp.common.DispatcherProvider
-import com.raj.newsapp.model.data.TopHeadlinesSourceResponse
+import com.raj.newsapp.model.data.TopHeadlinesResponse
+import com.raj.newsapp.model.data.TopHeadlinesSourcesResponse
 import com.raj.newsapp.model.repository.NewsRepository
 import com.raj.newsapp.ui.base.UiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,10 +21,13 @@ class TopHeadlinesSourcesViewModel @Inject constructor(
     private val dispatcherProvider: DispatcherProvider
 ) : ViewModel() {
 
-    private val _sourceStateFlow =
-        MutableStateFlow<UiState<List<TopHeadlinesSourceResponse.Source>>>(UiState.Loading)
+    private val _sourcesStateFlow =
+        MutableStateFlow<UiState<List<TopHeadlinesSourcesResponse.Source>>>(UiState.Loading)
+    internal val sourcesStateFlow = _sourcesStateFlow.asStateFlow()
 
-    internal val sourceStateFlow = _sourceStateFlow.asStateFlow()
+    private val _topHeadlinesBySourceFlow =
+        MutableStateFlow<UiState<List<TopHeadlinesResponse.Article>>>(UiState.Loading)
+    internal val topHeadlinesBySourceFlow = _topHeadlinesBySourceFlow.asStateFlow()
 
     init {
         fetchTopHeadlinesSources()
@@ -34,15 +38,43 @@ class TopHeadlinesSourcesViewModel @Inject constructor(
             newsRepository.fetchNewsSources()
                 .flowOn(dispatcherProvider.io)
                 .catch { e ->
-                    _sourceStateFlow.value = UiState.Error(e.toString())
-                }.collect { topHeadlinesSource ->
-                    when (topHeadlinesSource.status) {
+                    _sourcesStateFlow.value = UiState.Error(e.toString())
+                }.collect { topHeadlinesSources ->
+                    when (topHeadlinesSources.status) {
                         "ok" -> {
-                            _sourceStateFlow.value = UiState.Success(topHeadlinesSource.sources)
+                            _sourcesStateFlow.value = UiState.Success(topHeadlinesSources.sources)
                         }
 
                         else -> {
-                            _sourceStateFlow.value = UiState.Error(message = "Something went wrong")
+                            _sourcesStateFlow.value =
+                                UiState.Error(message = "Something went wrong")
+                        }
+                    }
+                }
+        }
+    }
+
+    internal fun fetchTopHeadlinesBySource(source: String) {
+        viewModelScope.launch(dispatcherProvider.main) {
+            newsRepository.fetchTopHeadlinesBySource(source)
+                .flowOn(dispatcherProvider.io)
+                .catch { e ->
+                    _topHeadlinesBySourceFlow.value = UiState.Error(e.toString())
+                }.collect { topHeadlinesResponse ->
+                    when (topHeadlinesResponse.status) {
+                        "ok" -> {
+                            if (topHeadlinesResponse.articles.isNotEmpty()) {
+                                _topHeadlinesBySourceFlow.value =
+                                    UiState.Success(topHeadlinesResponse.articles)
+                            } else {
+                                _topHeadlinesBySourceFlow.value =
+                                    UiState.Error(message = "Currently no article for selected sources. Please select another source")
+                            }
+                        }
+
+                        else -> {
+                            _topHeadlinesBySourceFlow.value =
+                                UiState.Error(message = "Something went wrong")
                         }
                     }
                 }
