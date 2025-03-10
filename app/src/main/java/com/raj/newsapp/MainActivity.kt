@@ -24,7 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.raj.newsapp.ui.base.navigations.TopHeadlinesNaveHost
 import com.raj.newsapp.ui.theme.NewsAppComposeTheme
-import com.raj.newsapp.view.ClickAction
+import com.raj.newsapp.view.ClickActionMain
 import com.raj.newsapp.view.MainScreen
 import com.raj.newsapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -72,7 +72,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-fun clickAction(viewModel: MainViewModel) = ClickAction(
+fun clickAction(viewModel: MainViewModel) = ClickActionMain(
     topHeadlines = {
         viewModel.showTopHeadlines()
     },

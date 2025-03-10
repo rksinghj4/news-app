@@ -10,14 +10,12 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.launch
 
-data class ClickAction(
+data class ClickActionMain(
     val topHeadlines: () -> Unit,
     val newsSource: () -> Unit,
     val countries: () -> Unit,
@@ -26,7 +24,7 @@ data class ClickAction(
 )
 
 @Composable
-fun MainScreen(clickAction: ClickAction) {
+fun MainScreen(clickActionMain: ClickActionMain) {
 
     Column(
         modifier = Modifier
@@ -35,15 +33,15 @@ fun MainScreen(clickAction: ClickAction) {
         verticalArrangement = Arrangement.SpaceEvenly,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        CardItem(text = "Top Headlines", onClick = clickAction.topHeadlines)
+        CardItem(text = "Top Headlines", onClick = clickActionMain.topHeadlines)
 
-        CardItem(text = "News Source", onClick = clickAction.newsSource)
+        CardItem(text = "News Source", onClick = clickActionMain.newsSource)
 
-        CardItem(text = "Countries", onClick = clickAction.countries)
+        CardItem(text = "Countries", onClick = clickActionMain.countries)
 
-        CardItem(text = "Language", onClick = clickAction.language)
+        CardItem(text = "Language", onClick = clickActionMain.language)
 
-        CardItem(text = "Search", onClick = clickAction.search)
+        CardItem(text = "Search", onClick = clickActionMain.search)
     }
 }
 
