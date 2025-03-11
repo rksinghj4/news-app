@@ -6,5 +6,6 @@
     <string name="top_headlines_by_source">Top headlines by source</string>
     <string name="top_headlines_countries">Select Countries for Headlines</string>
     <string name="top_headlines_by_country">Top headlines by country</string>
-
+    <string name="top_headlines_languages">Select Language for Headlines</string>
+    <string name="top_headlines_by_language">Top headlines by language</string>
 </resources>
