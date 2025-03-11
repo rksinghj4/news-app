@@ -47,7 +47,7 @@ fun NewsBySourceNode(
     viewModel: TopHeadlinesSourcesViewModel = hiltViewModel()
 ) {
     viewModel.fetchTopHeadlinesBySource(source = selectedSource)
-    val topHeadlinesBySourceState by viewModel.topHeadlinesBySourceFlow.collectAsStateWithLifecycle()
+    val topHeadlinesBySourceState by viewModel.topHeadlinesBySourceStateFlow.collectAsStateWithLifecycle()
     TopBarScaffold(title = stringResource(R.string.top_headlines_by_source)) {
         TopHeadlinesScreen(topHeadlinesBySourceState) { url ->
             onItemClick(url)

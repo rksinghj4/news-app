@@ -26,15 +26,14 @@ import com.raj.newsapp.ui.base.ErrorScreen
 import com.raj.newsapp.ui.base.Loading
 import com.raj.newsapp.ui.base.TopBarScaffold
 import com.raj.newsapp.ui.base.UiState
-import com.raj.newsapp.viewmodel.TopHeadlinesSourcesViewModel
+import com.raj.newsapp.viewmodel.NewsByCountryViewModel
 
 
 @Composable
 fun CountryNode(
     onItemClick: (countryCode: String) -> Unit = {},
-    viewModel: TopHeadlinesSourcesViewModel = hiltViewModel()
+    viewModel: NewsByCountryViewModel = hiltViewModel()
 ) {
-    viewModel.fetchCountries()
     val countryState by viewModel.countryStateFlow.collectAsStateWithLifecycle()
     TopBarScaffold(title = stringResource(R.string.top_headlines_countries)) {
         CountryScreen(countryState, onItemClick = onItemClick)
@@ -45,10 +44,10 @@ fun CountryNode(
 fun NewsByCountry(
     selectedCountry: String,
     onItemClick: (url: String) -> Unit = {},
-    viewModel: TopHeadlinesSourcesViewModel = hiltViewModel()
+    viewModel: NewsByCountryViewModel = hiltViewModel()
 ) {
     viewModel.fetchTopHeadlinesByCountry(selectedCountry)
-    val topHeadlinesByCountryState by viewModel.topHeadlinesByCountryFlow.collectAsStateWithLifecycle()
+    val topHeadlinesByCountryState by viewModel.topHeadlinesByCountryStateFlow.collectAsStateWithLifecycle()
     TopBarScaffold(title = stringResource(R.string.top_headlines_by_country)) {
         TopHeadlinesScreen(topHeadlinesByCountryState) { url ->
             onItemClick(url)
