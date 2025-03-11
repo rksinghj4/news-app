@@ -32,4 +32,8 @@ interface WebService {
     @Headers("X-Api-Key: $API_KEY", "User-Agent: news-android-app")
     @GET("top-headlines")
     suspend fun fetchTopHeadlinesByLanguage(@Query("language") language: String): TopHeadlinesResponse
+
+    @Headers("X-Api-Key: $API_KEY", "User-Agent: news-android-app")
+    @GET("everything")
+    suspend fun fetchNewsBySearchQuery(@Query("q") searchQueries: String): TopHeadlinesResponse
 }

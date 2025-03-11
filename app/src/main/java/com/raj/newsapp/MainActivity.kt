@@ -24,6 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.raj.newsapp.ui.base.navigations.CountriesNavHost
 import com.raj.newsapp.ui.base.navigations.LanguageNavHost
+import com.raj.newsapp.ui.base.navigations.SearchNavHost
 import com.raj.newsapp.ui.base.navigations.SourcesNavHost
 import com.raj.newsapp.ui.base.navigations.TopHeadlinesNavHost
 import com.raj.newsapp.ui.theme.NewsAppComposeTheme
@@ -45,7 +46,7 @@ class MainActivity : ComponentActivity() {
             val showNewsSourcesState by viewModel.showNewsSource.collectAsStateWithLifecycle()
             val showCountriesState by viewModel.showCountries.collectAsStateWithLifecycle()
             val showLanguageState by viewModel.showLanguage.collectAsStateWithLifecycle()
-
+            val showSearchState by viewModel.showSearch.collectAsStateWithLifecycle()
             val context = LocalContext.current
             var backPressedTime by remember { mutableLongStateOf(0L) }
 
@@ -80,6 +81,9 @@ class MainActivity : ComponentActivity() {
                         }
                         if (showLanguageState) {
                             LanguageNavHost()
+                        }
+                        if (showSearchState) {
+                            SearchNavHost()
                         }
                     }
                 }

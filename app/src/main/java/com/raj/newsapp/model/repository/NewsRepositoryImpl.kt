@@ -41,4 +41,12 @@ class NewsRepositoryImpl @Inject constructor(private val webService: WebService)
             emit(webService.fetchTopHeadlinesByLanguage(language))
         }
     }
+
+    override fun fetchNewsBySearchQuery(searchQueries: String): Flow<TopHeadlinesResponse> {
+        return flow {
+            emit(webService.fetchNewsBySearchQuery(searchQueries))
+        }
+    }
+
+
 }

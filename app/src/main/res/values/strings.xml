@@ -8,4 +8,5 @@
     <string name="top_headlines_by_country">Top headlines by country</string>
     <string name="top_headlines_languages">Select Language for Headlines</string>
     <string name="top_headlines_by_language">Top headlines by language</string>
+    <string name="top_headlines_by_search">Search</string>
 </resources>
