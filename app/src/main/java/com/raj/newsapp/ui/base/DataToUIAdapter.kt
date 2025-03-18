@@ -21,7 +21,7 @@ import com.raj.newsapp.model.data.TopHeadlinesResponse
 @Composable
 fun ArticleList(articles: List<TopHeadlinesResponse.Article>, onItemClick: (url: String) -> Unit) {
     LazyColumn(modifier = Modifier.padding(24.dp)) {
-        items(items = articles, key = { article -> article.url }) { article ->
+        items(items = articles, key = { article -> article.url + article.publishedAt }) { article ->
             Article(article) { url ->
                 onItemClick(url)
             }

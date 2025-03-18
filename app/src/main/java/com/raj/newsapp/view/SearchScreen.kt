@@ -1,8 +1,8 @@
 package com.raj.newsapp.view
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Close
 import androidx.compose.material.icons.rounded.Search
@@ -23,11 +23,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.raj.newsapp.R
-import com.raj.newsapp.model.data.TopHeadlinesResponse
-import com.raj.newsapp.ui.base.ErrorScreen
-import com.raj.newsapp.ui.base.Loading
 import com.raj.newsapp.ui.base.TopBarScaffold
-import com.raj.newsapp.ui.base.UiState
 import com.raj.newsapp.viewmodel.NewsBySearchViewModel
 
 @Composable
@@ -75,11 +71,15 @@ fun SearchScreen(
             )
         },
         trailingIcon = {
-            if (active)
+            if (active) {
                 Icon(
+                    modifier = Modifier.clickable {
+                        viewModel.updateQuery("")
+                    },
                     imageVector = Icons.Rounded.Close,
                     contentDescription = null
                 )
+            }
         },
         colors = SearchBarDefaults.colors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerLow,

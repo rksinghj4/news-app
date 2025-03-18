@@ -88,7 +88,7 @@ fun SourcesList(
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        items(items = sources, key = { source -> source.url }) { source ->
+        items(items = sources, key = { source -> source.url + source.id }) { source ->
             Source(source, onItemClick = onItemClick)
         }
     }
