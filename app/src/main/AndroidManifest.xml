@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" >
     <uses-permission android:name="android.permission.INTERNET"/>
+        <!--
+        com.raj.newsapp.NewsApplication
+        //This is the default Affinity for all the activities in app.
+        Unless we define a different affinity for specific Activity
+       -->
     <application
         android:name=".NewsApplication"
         android:allowBackup="true"

@@ -40,7 +40,7 @@ class NewsBySearchViewModel @Inject constructor(
     }
 
     @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-    internal fun searchQuery() {
+    internal fun searchQuery() {//This must be called single time. So that all query changes go through single pipe.
         viewModelScope.launch {
             searchQueryStateFlow
                 .debounce(300)
