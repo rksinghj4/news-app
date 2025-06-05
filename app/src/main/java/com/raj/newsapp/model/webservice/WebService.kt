@@ -9,7 +9,6 @@ import retrofit2.http.Query
 
 interface WebService {
 
-    @Headers("X-Api-Key: $API_KEY")
     @GET("top-headlines")
     suspend fun fetchTopHeadlines(
         @Query("country") country: String,
@@ -17,23 +16,18 @@ interface WebService {
         @Query("pageSize") pageSize: Int = 10
     ): TopHeadlinesResponse
 
-    @Headers("X-Api-Key: $API_KEY")
     @GET("top-headlines/sources")
     suspend fun fetchTopHeadlinesSources(): TopHeadlinesSourcesResponse
 
-    @Headers("X-Api-Key: $API_KEY")
     @GET("top-headlines")
     suspend fun fetchTopHeadlinesBySource(@Query("sources") source: String): TopHeadlinesResponse
 
-    @Headers("X-Api-Key: $API_KEY", "User-Agent: news-android-app")
     @GET("top-headlines")
     suspend fun fetchTopHeadlinesByCountry(@Query("country") country: String): TopHeadlinesResponse
 
-    @Headers("X-Api-Key: $API_KEY", "User-Agent: news-android-app")
     @GET("top-headlines")
     suspend fun fetchTopHeadlinesByLanguage(@Query("language") language: String): TopHeadlinesResponse
 
-    @Headers("X-Api-Key: $API_KEY", "User-Agent: news-android-app")
     @GET("everything")
     suspend fun fetchNewsBySearchQuery(@Query("q") searchQueries: String): TopHeadlinesResponse
 }
