@@ -99,12 +99,18 @@ dependencies {
     //implementation(libs.okhttp3) //No need to add it.
     // Optional: For logging HTTP requests and responses
     //implementation(libs.okhttp3.logging.interceptor)
-
-    testImplementation(libs.junit)
+    //For Unit Testing
+    testImplementation(libs.test.junit)
+    testImplementation(libs.test.mockito.core)
+    testImplementation(libs.test.androidx.arch.core.testing)
+    testImplementation(libs.test.kotlinx.coroutines.test)
+    testImplementation(libs.test.turbine)
+    // For Android instrumented tests
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.ui.test.junit4)
+    //For Debug builds
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 }

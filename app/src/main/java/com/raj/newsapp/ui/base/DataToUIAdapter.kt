@@ -42,10 +42,10 @@ fun Article(article: TopHeadlinesResponse.Article, onItemClick: (url: String) ->
         if (article.title.isNotEmpty()) {
             TitleText(article.title)
         }
-        if (article.description?.isNotEmpty() == true) {
+        if (article.description.isNotEmpty()) {
             DescriptionText(article.description)
         }
-        if (article.source.name?.isNotEmpty() == true) {
+        if (article.source.name.isNotEmpty()) {
             SourceText(article.source.name)
         }
     }
