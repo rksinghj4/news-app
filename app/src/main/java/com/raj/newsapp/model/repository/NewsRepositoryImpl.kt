@@ -8,6 +8,13 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Separation of Concerns
+ * Your repository should focus on business logic and data source coordination.
+ *
+ * It should not be tied to how concurrency is managed (Dispatchers.IO, etc.).
+ *
+ */
 @Singleton
 class NewsRepositoryImpl @Inject constructor(private val webService: WebService) : NewsRepository {
     override fun fetchTopHeadlines(country: String): Flow<TopHeadlinesResponse> {

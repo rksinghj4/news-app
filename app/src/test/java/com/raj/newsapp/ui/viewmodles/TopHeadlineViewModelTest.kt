@@ -61,8 +61,9 @@ class TopHeadlineViewModelTest {
                         )
                     )
                 }).`when`(newsRepository)
-                .fetchTopHeadlines(COUNTRY)//Must always pas data class object or Primitive types
+                .fetchTopHeadlines(COUNTRY)//Must always pass data class object or Primitive types
 
+            //Create your own TopHeadlineViewModel manually. No mocking for what we are testing.
             val viewModel = TopHeadlineViewModel(newsRepository, dispatcherProvider)
             //fetchTopHeadlines is called On TopHeadlineViewModel's init{fetchTopHeadlines()}
 
@@ -90,7 +91,7 @@ class TopHeadlineViewModelTest {
             }
 
             /**
-             * Verify that the repository method was called exactly once with the correct country,
+             * Verify that the repository(dependency ka) method was called exactly once with the correct country,
              * during merge conflict there is a chance of duplicate calls.
              */
             verify(newsRepository, times(1)).fetchTopHeadlines(COUNTRY)
@@ -176,7 +177,7 @@ class TopHeadlineViewModelTest {
                     )
                 }
             ).`when`(newsRepository).fetchTopHeadlines(COUNTRY)
-
+            //Create and call subject under test
             val viewMode = TopHeadlineViewModel(newsRepository, dispatcherProvider)
 
             viewMode.uiStateFlow.test {
