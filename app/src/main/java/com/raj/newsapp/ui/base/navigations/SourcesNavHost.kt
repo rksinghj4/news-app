@@ -23,19 +23,26 @@ sealed interface SourceRoute {
 
 @Composable
 fun SourcesNavHost() {
+    //NavHostController - Brain or manager, who remember the current screen and lets you navigate to other screens.
     val navHostController: NavHostController = rememberNavController()
     val context = LocalContext.current
-    NavHost(
+    //NavHost is nothing but a navigation graph, where each node is nothing but a screen.
+    NavHost(//Graph
         navController = navHostController,
         startDestination = SourceRoute.SourcesList
     ) {
+        //Node 1
         composable<SourceRoute.SourcesList> {
+            //Screen 1
             NewsSourcesNode(onItemClick = { source ->
+                //Brain or manager will decide the next destination node.
                 navHostController.navigate(SourceRoute.SourceDetails(source))
             })
         }
 
+        //Node 2
         composable<SourceRoute.SourceDetails> { navBackStackEntry ->
+            //Transfer data from one screen to another screen
             val sourceDetails = navBackStackEntry.toRoute<SourceRoute.SourceDetails>()
 
             NewsBySourceNode(selectedSource = sourceDetails.source, onItemClick = { url ->

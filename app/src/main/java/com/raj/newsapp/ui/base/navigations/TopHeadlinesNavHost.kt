@@ -18,19 +18,34 @@ sealed class Route {
 
 @Composable
 fun TopHeadlinesNavHost() {
+    /**
+     * 1. NavHostController - The Brain or navigation manager.
+     * It knows the current screen and lets you navigate to other screens.
+     */
     val navController: NavHostController = rememberNavController()
     val context = LocalContext.current
 
+    /**
+     * 2. NavHost — The Router
+     *
+     * It is where you define all your screens (destinations) and their routes.
+     * It hosts your navigation graph.
+     */
     NavHost(
         navController = navController,//must assign NavHostController
         startDestination = Route.TopHeadlines
     ) {
+        /**
+         * 3. composable() — A Destination
+         * You can define as many nodes/composable you want in side NavHost
+         */
         composable<Route.TopHeadlines> { navBackStackEntry ->
             TopHeadlinesNode(onNewsClick = { url ->
                 openCustomChromeTab(context, url)
             }
             )
         }
+        //Keep adding other composable
     }
 }
 
