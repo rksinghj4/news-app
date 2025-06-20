@@ -1,6 +1,7 @@
 package com.raj.newsapp.di
 
 import android.content.Context
+import com.raj.newsapp.BuildConfig
 import com.raj.newsapp.common.CommonHeaderInterceptor
 import com.raj.newsapp.common.CoreConfig
 import com.raj.newsapp.common.CoreConfigImpl
@@ -13,6 +14,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.Cache
+import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -22,12 +24,14 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-class NetworkModule {//Note: It's class
+class NetworkModule {
+    //Note: It's class
     //Because Hilt binds applicationContext automatically in the SingletonComponent,
     // you don’t need to provide it yourself.
     @Singleton
     @Provides
-    fun provideCoreConfig(@ApplicationContext context: Context) : CoreConfig = CoreConfigImpl(context)
+    fun provideCoreConfig(@ApplicationContext context: Context): CoreConfig =
+        CoreConfigImpl(context)
 
     @Singleton
     @Provides
@@ -52,21 +56,29 @@ class NetworkModule {//Note: It's class
     @Singleton
     @Provides
     fun provideOkHttpCache(coreConfig: CoreConfig): Cache {
-        val cacheSize = 10 * 1024 * 1024
-        val nwCacheFolder = File(coreConfig.getCacheDirPath(), "NewsCache")
-        nwCacheFolder.mkdir()
-        return Cache(nwCacheFolder, cacheSize.toLong())
+        val cacheSize = 10 * 1024 * 1024 //10 MB
+        val nwCacheFile = File(coreConfig.getCacheDirPath(), "NewsCache")
+        nwCacheFile.mkdir()
+        return Cache(nwCacheFile, cacheSize.toLong())
     }
 
+    @Singleton
+    @Provides
+    fun providesCertificatePinner(@BaseUrl baseUrl: String): CertificatePinner {
+        return CertificatePinner.Builder()
+            .add("newsapi.org", "sha256/${BuildConfig.API_KEY}")//adding hashCode of server's public key
+            .build()
+    }
 
     //To provide different variations of OkHttpClient we can write separate methods
     // to customize the builder and build it.
     @Singleton
     @Provides
-    fun provideOkHttpBuilder(cache: Cache, coreConfig: CoreConfig):OkHttpClient.Builder {
+    fun provideOkHttpBuilder(cache: Cache, coreConfig: CoreConfig, certificatePinner: CertificatePinner): OkHttpClient.Builder {
         //All common stuffs are added here.
         val okHttpClientBuilder = OkHttpClient.Builder()
         okHttpClientBuilder.cache(cache)
+        //okHttpClientBuilder.certificatePinner(certificatePinner)
         okHttpClientBuilder.addInterceptor(CommonHeaderInterceptor(coreConfig))
         return okHttpClientBuilder
     }
@@ -100,11 +112,13 @@ class NetworkModule {//Note: It's class
 
     companion object {
         //Time to establish connection with the serve, Use shorter connectTimeout to fail fast on network errors
-        private const val CONNECTION_TIME_OUT =  10L
+        private const val CONNECTION_TIME_OUT = 10L
+
         //Max time to wait for server response (after connection is made)
-        private const val READ_TIME_OUT =  30L
+        private const val READ_TIME_OUT = 30L
+
         //Max time allowed to send data to server (like file uploads)
-        private const val WRITE_TIME_OUT =  30L
+        private const val WRITE_TIME_OUT = 30L
     }
 }
 
