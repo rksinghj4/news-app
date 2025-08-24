@@ -78,6 +78,7 @@ class NetworkModule {
         //All common stuffs are added here.
         val okHttpClientBuilder = OkHttpClient.Builder()
         okHttpClientBuilder.cache(cache)
+        .retryOnConnectionFailure(true)//internal var retryOnConnectionFailure = true By default true
         //okHttpClientBuilder.certificatePinner(certificatePinner)
         okHttpClientBuilder.addInterceptor(CommonHeaderInterceptor(coreConfig))
         return okHttpClientBuilder

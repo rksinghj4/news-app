@@ -22,6 +22,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.lifecycleScope
 import com.raj.newsapp.ui.base.navigations.CountriesNavHost
 import com.raj.newsapp.ui.base.navigations.LanguageNavHost
 import com.raj.newsapp.ui.base.navigations.SearchNavHost
@@ -32,6 +33,7 @@ import com.raj.newsapp.view.ClickActionMain
 import com.raj.newsapp.view.MainScreen
 import com.raj.newsapp.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -93,6 +95,10 @@ class MainActivity : ComponentActivity() {
 
     override fun getOnBackInvokedDispatcher(): OnBackInvokedDispatcher {
         return super.getOnBackInvokedDispatcher()
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
     }
 }
 
