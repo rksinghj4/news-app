@@ -1,8 +1,10 @@
 package com.raj.newsapp.model.data
 
 
+import androidx.annotation.Keep
 import com.google.gson.annotations.SerializedName
 
+@Keep
 data class TopHeadlinesResponse(
     @SerializedName("articles")
     val articles: List<Article>,
